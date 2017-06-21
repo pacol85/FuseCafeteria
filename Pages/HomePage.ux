@@ -1,0 +1,27 @@
+<Pag ux:Class="HomePage">
+   <Router ux:Dependency="router" />
+
+   <JavaScript File="HomePage.js" />
+   <DockPanel>
+     <Texto FontSize="35" TextAlignment="Center" Dock="Top" Margin="0,50">Totales de órdenes...</Texto>
+
+     <ScrollView>
+        <StackPanel>
+          <Rectangle ux:Class="bDias" >
+             <string ux:Property="Text" />
+             <Panel Clicked="{goToDias}" HitTestMode="LocalBoundsAndChildren" >
+                <Texto Value="{ReadProperty Text}" Color="White" Margin="20" FontSize="20"/>
+                <WhilePressed>
+                  <Scale Factor="0.95" Duration="0.08" Easing="QuadraticOut"/>
+                </WhilePressed>
+              </Panel>
+           </Rectangle>
+           <Each Items="{opciones}">
+             <Separator />
+             <bDias Text="{texto}"/>
+         </Each>
+           <Separator />
+        </StackPanel>
+     </ScrollView>
+   </DockPanel>
+</Pag>

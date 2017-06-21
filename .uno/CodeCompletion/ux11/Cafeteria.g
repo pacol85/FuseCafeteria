@@ -1,0 +1,13 @@
+.uno/CodeCompletion/ux11/MainView.g.uno
+.uno/CodeCompletion/ux11/Boton.g.uno
+.uno/CodeCompletion/ux11/CajaTexto.g.uno
+.uno/CodeCompletion/ux11/Pag.g.uno
+.uno/CodeCompletion/ux11/Separator.g.uno
+.uno/CodeCompletion/ux11/Texto.g.uno
+.uno/CodeCompletion/ux11/VistaTexto.g.uno
+.uno/CodeCompletion/ux11/HomePage.g.uno
+.uno/CodeCompletion/ux11/bDias.g.uno
+.uno/CodeCompletion/ux11/ShowDataPage.g.uno
+.uno/CodeCompletion/ux11/TitleText.g.uno
+.uno/CodeCompletion/ux11/SplashPage.g.uno
+.uno/CodeCompletion/ux11/Cafeteria.unoproj.g.uno

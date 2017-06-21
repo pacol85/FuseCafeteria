@@ -1,0 +1,20 @@
+<Pag ux:Class="SplashPage">
+	<Router ux:Dependency="router" />
+
+	<JavaScript File="SplashPage.js" />
+
+	<DockPanel ClipToBounds="true">
+
+
+
+
+		<Grid RowCount="2">
+			<StackPanel Alignment="VerticalCenter">
+				<Texto Alignment="HorizontalCenter" FontSize="70">Cafeteria</Texto>
+				<Texto Alignment="HorizontalCenter" Opacity=".5">Estado de órdenes</Texto>
+			</StackPanel>
+
+			<Boton Text="Iniciar" FontSize="25" Margin="50,0" Alignment="VerticalCenter" Clicked="{goToHomePage}" />
+		</Grid>
+	</DockPanel>
+</Pag>

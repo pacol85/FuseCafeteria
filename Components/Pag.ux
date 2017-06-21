@@ -1,0 +1,3 @@
+<Page ux:Class="Pag">
+  <Image Layer="Background" File="../Assets/background.jpg" StretchMode="UniformToFill" Opacity=".3"/>
+</Page>

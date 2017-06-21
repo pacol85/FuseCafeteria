@@ -1,0 +1,13 @@
+.uno/ux11/MainView.g.uno
+.uno/ux11/Boton.g.uno
+.uno/ux11/CajaTexto.g.uno
+.uno/ux11/Pag.g.uno
+.uno/ux11/Separator.g.uno
+.uno/ux11/Texto.g.uno
+.uno/ux11/VistaTexto.g.uno
+.uno/ux11/HomePage.g.uno
+.uno/ux11/bDias.g.uno
+.uno/ux11/ShowDataPage.g.uno
+.uno/ux11/TitleText.g.uno
+.uno/ux11/SplashPage.g.uno
+.uno/ux11/Cafeteria.unoproj.g.uno

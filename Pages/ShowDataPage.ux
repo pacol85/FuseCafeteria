@@ -1,0 +1,64 @@
+<Pag ux:Class="ShowDataPage">
+   <Router ux:Dependency="router" />
+
+   <JavaScript >
+   var Observable = require("FuseJS/Observable");
+
+   var result = Observable();
+   var data = Observable();
+
+   var obj = this.Parameter;
+   var d = Observable();
+   var url = Observable();
+   d = obj.map(function(x) {
+      url = "http://controlruta.ml/cafeteria/reporte/chartDataAPI/";
+      url = url + x;
+      obtener(url);
+      return x;
+   });
+
+   function obtener(u){
+      fetch(u).then(function(response) {
+         console.log("ingreso");
+         return response.json();
+      }).then(function(resultado) {
+         data.value = resultado;
+         result.replaceAll(data.value);
+         console.log(result);
+      }).catch(function(error) {
+         console.log("error: " + error.message);
+      });
+   }
+
+   function volver() {
+      router.goBack();
+   }
+
+   module.exports = {
+      result: result,
+      volver: volver,
+      d: d
+   }
+
+   </JavaScript>
+   <DockPanel>
+     <Grid ColumnCount="1" Dock="Bottom">
+       <Boton Clicked="{volver}" Text="Regresar" FontSize="30" Width="200"/>
+     </Grid>
+     <ScrollView>
+
+       <StackPanel Padding="10" ItemSpacing="10">
+          <Texto FontSize="28" TextAlignment="Center" Dock="Top" Margin="0,5" Value="Ordenes último(s) {d} día(s)" />
+          <Texto Opacity="0.6" Margin="0,0,0,5" ux:Class="TitleText"/>
+          <Separator />
+          <Separator />
+          <Each Items="{result}">
+            <StackPanel>
+               <Texto Value="{label}: {value}" FontSize="25" />
+            </StackPanel>
+            <Separator />
+          </Each>
+       </StackPanel>
+     </ScrollView>
+   </DockPanel>
+</Pag>
