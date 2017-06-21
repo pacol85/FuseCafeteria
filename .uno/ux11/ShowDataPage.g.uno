@@ -79,8 +79,8 @@ public partial class ShowDataPage: Pag
     void InitializeUX()
     {
         __g_nametable = new global::Uno.UX.NameTable(null, __g_static_nametable);
-        var temp2 = new global::Fuse.Reactive.Data("regresar");
-        var temp3 = "Ordenes últimos ";
+        var temp2 = new global::Fuse.Reactive.Data("volver");
+        var temp3 = "Ordenes último(s) ";
         var temp4 = new global::Fuse.Reactive.Constant(temp3);
         var temp5 = new global::Fuse.Reactive.Data("d");
         var temp6 = " día(s)";
@@ -91,7 +91,7 @@ public partial class ShowDataPage: Pag
         var temp9 = new global::Fuse.Reactive.Add(temp4, temp8);
         var temp1 = new global::Fuse.Reactive.Each();
         temp1_Items_inst = new Cafeteria_FuseReactiveEach_Items_Property(temp1, __selector1);
-        var temp10 = new global::Fuse.Reactive.Data("orders");
+        var temp10 = new global::Fuse.Reactive.Data("result");
         var temp11 = new global::Fuse.Reactive.JavaScript(__g_nametable);
         var temp12 = new global::Fuse.Controls.DockPanel();
         var temp13 = new global::Fuse.Controls.Grid();
@@ -101,12 +101,13 @@ public partial class ShowDataPage: Pag
         var temp16 = new global::Fuse.Controls.StackPanel();
         var temp17 = new global::Fuse.Reactive.DataBinding(temp_Value_inst, temp9, __g_nametable, Fuse.Reactive.BindingMode.Default);
         var temp18 = new global::Separator();
-        var temp19 = new Template(this, this);
-        var temp20 = new Template1(this, this);
-        var temp21 = new global::Fuse.Reactive.DataBinding(temp1_Items_inst, temp10, __g_nametable, Fuse.Reactive.BindingMode.Default);
+        var temp19 = new global::Separator();
+        var temp20 = new Template(this, this);
+        var temp21 = new Template1(this, this);
+        var temp22 = new global::Fuse.Reactive.DataBinding(temp1_Items_inst, temp10, __g_nametable, Fuse.Reactive.BindingMode.Default);
+        temp11.Code = "\n   var Observable = require(\"FuseJS/Observable\");\n\n   var result = Observable();\n   var data = Observable();\n\n   var obj = this.Parameter;\n   var d = Observable();\n   var url = Observable();\n   d = obj.map(function(x) {\n      url = \"http://controlruta.ml/cafeteria/reporte/chartDataAPI/\";\n      url = url + x;\n      obtener(url);\n      return x;\n   });\n\n   function obtener(u){\n      fetch(u).then(function(response) {\n         console.log(\"ingreso\");\n         return response.json();\n      }).then(function(resultado) {\n         data.value = resultado;\n         result.replaceAll(data.value);\n         console.log(result);\n      }).catch(function(error) {\n         console.log(\"error: \" + error.message);\n      });\n   }\n\n   function volver() {\n      router.goBack();\n   }\n\n   module.exports = {\n      result: result,\n      volver: volver,\n      d: d\n   }\n\n   ";
         temp11.LineNumber = 4;
         temp11.FileName = "Pages/ShowDataPage.ux";
-        temp11.File = new global::Uno.UX.BundleFileSource(import global::Uno.IO.BundleFile("../../Pages/ShowDataPage.js"));
         temp12.Children.Add(temp13);
         temp12.Children.Add(temp15);
         temp13.ColumnCount = 1;
@@ -122,15 +123,16 @@ public partial class ShowDataPage: Pag
         temp16.Padding = float4(10f, 10f, 10f, 10f);
         temp16.Children.Add(temp);
         temp16.Children.Add(temp18);
+        temp16.Children.Add(temp19);
         temp16.Children.Add(temp1);
-        temp.FontSize = 35f;
+        temp.FontSize = 28f;
         temp.TextAlignment = Fuse.Controls.TextAlignment.Center;
-        temp.Margin = float4(0f, 50f, 0f, 50f);
+        temp.Margin = float4(0f, 5f, 0f, 5f);
         global::Fuse.Controls.DockPanel.SetDock(temp, Fuse.Layouts.Dock.Top);
         temp.Bindings.Add(temp17);
-        temp1.Templates.Add(temp19);
         temp1.Templates.Add(temp20);
-        temp1.Bindings.Add(temp21);
+        temp1.Templates.Add(temp21);
+        temp1.Bindings.Add(temp22);
         __g_nametable.This = this;
         __g_nametable.Objects.Add(router);
         __g_nametable.Objects.Add(temp_eb1);

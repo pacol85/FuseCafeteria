@@ -7,5 +7,16 @@
   "Includes": [
     "*",
     "Modules/*.js:Bundle"
-  ]
+  ],
+  "Icon" : "Assets/logo.png",
+   "Android": {
+   "Icons": {
+               "LDPI": "$(Icon)",
+               "MDPI": "$(Icon)",
+               "HDPI": "$(Icon)",
+               "XHDPI": "$(Icon)",
+               "XXHDPI": "$(Icon)",
+               "XXXHDPI": "$(Icon)"
+           }
+   }
 }
