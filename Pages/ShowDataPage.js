@@ -1,35 +1,50 @@
-var Backend = require("Modules/Backend");
 var Observable = require("FuseJS/Observable");
-var orders = Observable();
-//orders = Backend.orders;
 
-//var obj = Observable();
-var obj = this.Parameter;
-var d = Observable();
+var items = Observable([
+	{ value: 25, color: "#4CD8FC" },
+	{ value: 15, color: "#A943C1" },
+	{ value: 30, color: "#FFCE6B" },
+	{ value: 10, color: "#EB4CAF" },
+	{ value: 20, color: "#33CB9F" }
+]);
 
-d = obj.map(function(x) {
-   obtener(x);
-   return x;
-});
+var currentPage = Observable(0);
 
-function regresar(){
-  router.goBack();
+function activated(arg) {
+	currentPage.value = arg.data.index;
 }
 
-function obtener(dia){
-   Backend.getOrdersByDays(dia)
-     .then(function(norders){
-        //console.log(norders[1]['value']);
-       orders.replaceAll(norders);
-     })
-     .catch(function(error){
-       console.log("Couldn't get orders: " + error);
-    });
-    //console.log(JSON.stringify(Backend.displayOrders()));
-}
-
+var defaultRotation = Observable(0);
 module.exports = {
-   regresar: regresar,
-   d: d,
-   orders: orders
+	items: items.map(function(i){
+		var lastItem = {
+			startAngle: 0,
+			endAngle: 0,
+			angle: 0
+		};
+		i.forEach(function(x, c) {
+			x.index = c;
+			x.angle = ((x.value / 100) * 360);
+			if (c === 0) {
+				defaultRotation.value = x.angle / 2 + 90;
+			}
+			if (c > 0) {
+				lastItem.wheelRotate = (x.angle / 2) + (lastItem.angle / 2);
+			}
+
+			x.startAngle = lastItem.startAngle - x.angle;
+			x.endAngle = lastItem.startAngle;
+
+			x.isActive = Observable(function(){
+				return currentPage.value == x.index;
+			});
+
+			lastItem = x;
+
+		});
+		return i;
+	}).expand(),
+	currentPage: currentPage,
+	activated: activated,
+	defaultRotation: defaultRotation
 };

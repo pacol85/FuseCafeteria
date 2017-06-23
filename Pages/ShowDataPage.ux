@@ -19,12 +19,10 @@
 
    function obtener(u){
       fetch(u).then(function(response) {
-         console.log("ingreso");
          return response.json();
       }).then(function(resultado) {
          data.value = resultado;
          result.replaceAll(data.value);
-         console.log(result);
       }).catch(function(error) {
          console.log("error: " + error.message);
       });
@@ -41,10 +39,37 @@
    }
 
    </JavaScript>
+   <JavaScript File="ShowDataPage.js" />
    <DockPanel>
      <Grid ColumnCount="1" Dock="Bottom">
        <Boton Clicked="{volver}" Text="Regresar" FontSize="30" Width="200"/>
      </Grid>
+
+     <Panel Height="270">
+          <Panel ux:Name="wheelPanel">
+              <Panel ux:Name="wheel" Height="150" Margin="10,50,10,10" >
+                  <Panel Alignment="Center" Width="160" Height="160">
+                      <Circle Color="#192050" Width="25%" Height="25%"/>
+                      <Each Items="{items}">
+                          <Rectangle Width="5" Color="#192050" Height="50%" TransformOrigin="Anchor" Anchor="50%,0%">
+                              <Rotation Degrees="{endAngle} - 90"/>
+                          </Rectangle>
+                      </Each>
+                      <Each Items="{items}">
+                          <Circle ux:Name="piece" Color="{color}" StartAngleDegrees="{startAngle}" EndAngleDegrees="{endAngle}" Opacity=".3">
+                              <WhileTrue Value="{isActive}">
+                                  <Change piece.Opacity="1" Duration="0.2"/>
+                              </WhileTrue>
+                          </Circle>
+
+                      </Each>
+                      <Rotation Degrees="{defaultRotation}" />
+                  </Panel>
+              </Panel>
+          </Panel>
+
+      </Panel>
+
      <ScrollView>
 
        <StackPanel Padding="10" ItemSpacing="10">
