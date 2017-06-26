@@ -8,6 +8,5 @@
 .uno/CodeCompletion/ux11/HomePage.g.uno
 .uno/CodeCompletion/ux11/bDias.g.uno
 .uno/CodeCompletion/ux11/ShowDataPage.g.uno
-.uno/CodeCompletion/ux11/TitleText.g.uno
 .uno/CodeCompletion/ux11/SplashPage.g.uno
 .uno/CodeCompletion/ux11/Cafeteria.unoproj.g.uno
