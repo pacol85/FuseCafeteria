@@ -6,15 +6,20 @@
 
    var result = Observable();
    var data = Observable();
+   //var items = Observable();
 
    var obj = this.Parameter;
    var d = Observable();
    var url = Observable();
-   d = obj.map(function(x) {
-      url = "http://controlruta.ml/cafeteria/reporte/chartDataAPI/";
-      url = url + x;
+   var defaultRotation = Observable(0);
+
+   
+   d = obj.map(function(xd) {
+      url = "http://controlruta.ml/cafeteria/reporte/chartDataAPIV2/";
+      url = url + xd;
       obtener(url);
-      return x;
+
+      return xd;
    });
 
    function obtener(u){
@@ -23,23 +28,73 @@
       }).then(function(resultado) {
          data.value = resultado;
          result.replaceAll(data.value);
+         items.replaceAll(data.value);
+         items.map(function(i){
+       		var lastItem = {
+       			startAngle: 0,
+       			endAngle: 0,
+       			angle: 0
+       		};
+       		i.forEach(function(x, c) {
+       			x.index = c;
+       			x.angle = ((x.porc / 100) * 360);
+       			if (c === 0) {
+       				defaultRotation.value = x.angle / 2 + 90;
+       			}
+       			if (c > 0) {
+       				lastItem.wheelRotate = (x.angle / 2) + (lastItem.angle / 2);
+       			}
+
+       			x.startAngle = lastItem.startAngle - x.angle;
+       			x.endAngle = lastItem.startAngle;
+
+       			x.isActive = Observable(function(){
+       				return currentPage.value == x.index;
+       			});
+
+       			lastItem = x;
+
+       		});
+       		return i;
+       	}).expand();
       }).catch(function(error) {
          console.log("error: " + error.message);
       });
    }
 
+
+
+   var items = Observable([
+   	{ porc: 25, color: "#4CD8FC" },
+   	{ porc: 15, color: "#A943C1" },
+   	{ porc: 30, color: "#FFCE6B" },
+   	{ porc: 10, color: "#EB4CAF" },
+   	{ porc: 20, color: "#33CB9F" }
+   ]);
+
    function volver() {
       router.goBack();
    }
 
+   var currentPage = Observable(0);
+
+   function activated(arg) {
+   	currentPage.value = arg.data.index;
+   }
+
+
+
    module.exports = {
       result: result,
       volver: volver,
-      d: d
+      d: d,
+      items: items,
+    	currentPage: currentPage,
+    	activated: activated
    }
 
    </JavaScript>
-   <JavaScript File="ShowDataPage.js" />
+
    <DockPanel>
      <Grid ColumnCount="1" Dock="Bottom">
        <Boton Clicked="{volver}" Text="Regresar" FontSize="30" Width="200"/>
