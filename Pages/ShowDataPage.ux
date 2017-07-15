@@ -6,14 +6,14 @@
 
    var result = Observable();
    var data = Observable();
-   //var items = Observable();
+   var items = Observable();
 
    var obj = this.Parameter;
    var d = Observable();
    var url = Observable();
    var defaultRotation = Observable(0);
 
-   
+
    d = obj.map(function(xd) {
       url = "http://controlruta.ml/cafeteria/reporte/chartDataAPIV2/";
       url = url + xd;
@@ -37,7 +37,7 @@
        		};
        		i.forEach(function(x, c) {
        			x.index = c;
-       			x.angle = ((x.porc / 100) * 360);
+       			x.angle = ((x.value / 100) * 360);
        			if (c === 0) {
        				defaultRotation.value = x.angle / 2 + 90;
        			}
@@ -63,14 +63,24 @@
    }
 
 
-
+/*
    var items = Observable([
-   	{ porc: 25, color: "#4CD8FC" },
-   	{ porc: 15, color: "#A943C1" },
-   	{ porc: 30, color: "#FFCE6B" },
-   	{ porc: 10, color: "#EB4CAF" },
-   	{ porc: 20, color: "#33CB9F" }
-   ]);
+    {"value":23,"label":"Papas fritas","porc":"34.848484848485","color":"#d33332","idata":
+      {"startAngle":-125.45454545455,"endAngle":0,"rotation":152.72727272727}},
+    {"value":16,"label":"Pollo a la Plancha","porc":"24.242424242424","color":"#b77776","idata":
+      {"startAngle":-212.72727272727,"endAngle":-125.45454545455,"rotation":43.636363636364}},
+    {"value":15,"label":"Hamburguesa","porc":"22.727272727273","color":"#9bbbba","idata":
+      {"startAngle":-294.54545454545,"endAngle":-212.72727272727,"rotation":40.909090909091}},
+    {"value":6,"label":"Pollo empanizado","porc":"9.0909090909091","color":"#7ffffe","idata":
+      {"startAngle":-327.27272727273,"endAngle":-294.54545454545,"rotation":16.363636363636}},
+    {"value":3,"label":"Pescado Frito","porc":"4.5454545454545","color":"#644442","idata":
+      {"startAngle":-343.63636363636,"endAngle":-327.27272727273,"rotation":8.1818181818182}},
+    {"value":2,"label":"Almuerzo San Rafael","porc":"3.030303030303","color":"#488886","idata":
+      {"startAngle":-354.54545454545,"endAngle":-343.63636363636,"rotation":5.4545454545455}},
+    {"value":1,"label":"Carne asada","porc":"1.5151515151515","color":"#2cccca","idata":
+      {"startAngle":-360,"endAngle":-354.54545454545,"rotation":2.7272727272727}},
+    ["d33332","b77776","9bbbba","7ffffe","644442","488886","2cccca","11110e"]]);
+*/
 
    function volver() {
       router.goBack();
@@ -82,14 +92,12 @@
    	currentPage.value = arg.data.index;
    }
 
-
-
    module.exports = {
       result: result,
       volver: volver,
       d: d,
       items: items,
-    	currentPage: currentPage,
+      currentPage: currentPage,
     	activated: activated
    }
 
@@ -113,15 +121,15 @@
               <Panel ux:Name="wheelPanel">
                   <Panel ux:Name="wheel" Height="200" Margin="10,10,10,10" >
                       <Panel Alignment="Center" Width="200" Height="200">
-                          <Circle Color="#192050" Width="25%" Height="25%"/>
+                          <Circle Color="#192050" Width="15%" Height="15%"/>
                           <Each Items="{items}">
-                              <Rectangle Width="5" Color="#192050" Height="50%" TransformOrigin="Anchor" Anchor="50%,0%">
-                                  <Rotation Degrees="{endAngle} - 90"/>
+                              <Rectangle Width="0.5" Color="#192050" Height="50%" TransformOrigin="Anchor" Anchor="50%,0%">
+                                  <Rotation Degrees="{idata.endAngle} - 90"/>
                               </Rectangle>
                           </Each>
                           <Each Items="{items}">
-                              <Circle ux:Name="piece" Color="{color}" StartAngleDegrees="{startAngle}" EndAngleDegrees="{endAngle}" Opacity=".3">
-                                  <WhileTrue Value="{isActive}">
+                              <Circle ux:Name="piece" Color="{color}" StartAngleDegrees="{idata.startAngle}" EndAngleDegrees="{idata.endAngle}" Opacity=".3">
+                                  <WhileTrue Value="true">
                                       <Change piece.Opacity="1" Duration="0.2"/>
                                   </WhileTrue>
                               </Circle>
@@ -136,7 +144,12 @@
 
           <Each Items="{result}">
             <StackPanel>
-               <Texto Value="{label}: {value}" FontSize="25" />
+              <Grid ColumnCount="8">
+                <Texto Value="{label}: {value}" FontSize="25" Column="1" ColumnSpan="7" />
+                <Rectangle Color="{color}" CornerRadius="4" Column="8" >
+             		   <DropShadow Angle="90" Distance="1" Spread="0.2" Size="2" Color="#00000060" />
+               	</Rectangle>
+              </Grid>
             </StackPanel>
             <Separator />
           </Each>

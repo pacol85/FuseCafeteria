@@ -8,6 +8,5 @@
 .uno/ux11/HomePage.g.uno
 .uno/ux11/bDias.g.uno
 .uno/ux11/ShowDataPage.g.uno
-.uno/ux11/TitleText.g.uno
 .uno/ux11/SplashPage.g.uno
 .uno/ux11/Cafeteria.unoproj.g.uno
