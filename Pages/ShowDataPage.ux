@@ -3,6 +3,7 @@
 
    <JavaScript >
    var Observable = require("FuseJS/Observable");
+   var Timer = require("FuseJS/Timer");
 
    var result = Observable();
    var data = Observable();
@@ -17,12 +18,15 @@
    d = obj.map(function(xd) {
       url = "http://controlruta.ml/cafeteria/reporte/chartDataAPIV2/";
       url = url + xd;
-      obtener(url);
+      Timer.create(function() {
+        obtener(url);
+      }, 10000, true);
 
       return xd;
    });
 
    function obtener(u){
+    //console.log("Se vuelve a llamar la funcion obtener");
       fetch(u).then(function(response) {
          return response.json();
       }).then(function(resultado) {
@@ -62,28 +66,10 @@
       });
    }
 
-
-/*
-   var items = Observable([
-    {"value":23,"label":"Papas fritas","porc":"34.848484848485","color":"#d33332","idata":
-      {"startAngle":-125.45454545455,"endAngle":0,"rotation":152.72727272727}},
-    {"value":16,"label":"Pollo a la Plancha","porc":"24.242424242424","color":"#b77776","idata":
-      {"startAngle":-212.72727272727,"endAngle":-125.45454545455,"rotation":43.636363636364}},
-    {"value":15,"label":"Hamburguesa","porc":"22.727272727273","color":"#9bbbba","idata":
-      {"startAngle":-294.54545454545,"endAngle":-212.72727272727,"rotation":40.909090909091}},
-    {"value":6,"label":"Pollo empanizado","porc":"9.0909090909091","color":"#7ffffe","idata":
-      {"startAngle":-327.27272727273,"endAngle":-294.54545454545,"rotation":16.363636363636}},
-    {"value":3,"label":"Pescado Frito","porc":"4.5454545454545","color":"#644442","idata":
-      {"startAngle":-343.63636363636,"endAngle":-327.27272727273,"rotation":8.1818181818182}},
-    {"value":2,"label":"Almuerzo San Rafael","porc":"3.030303030303","color":"#488886","idata":
-      {"startAngle":-354.54545454545,"endAngle":-343.63636363636,"rotation":5.4545454545455}},
-    {"value":1,"label":"Carne asada","porc":"1.5151515151515","color":"#2cccca","idata":
-      {"startAngle":-360,"endAngle":-354.54545454545,"rotation":2.7272727272727}},
-    ["d33332","b77776","9bbbba","7ffffe","644442","488886","2cccca","11110e"]]);
-*/
-
    function volver() {
-      router.goBack();
+     result.replaceAll([]);
+     items.replaceAll([]);
+     router.goBack();
    }
 
    var currentPage = Observable(0);
@@ -116,7 +102,9 @@
           <Texto FontSize="28" TextAlignment="Center" Dock="Top" Margin="0,5" Value="Ordenes último(s) {d} día(s)" />
           <Separator />
           <Separator />
-
+          <WhileEmpty Items="{result}">
+           <Texto FontSize="30" TextAlignment="Center" Margin="0,5">Cargando...</Texto>
+          </WhileEmpty>
           <Panel Height="220">
               <Panel ux:Name="wheelPanel">
                   <Panel ux:Name="wheel" Height="200" Margin="10,10,10,10" >
@@ -156,4 +144,5 @@
        </StackPanel>
      </ScrollView>
    </DockPanel>
+
 </Pag>
